@@ -1,0 +1,12 @@
+LoginFirstTest : !!ecommerce.testData.yaml.LoginPageTestData {
+itemDetails : {
+ email : "testengineer1@gmail.com",
+ password : "testengineer@1",
+},
+cardDetails : {
+ cardNumber : "4444555566667777",
+ expiryMonth : "12",
+ expiryYear : "2027", 
+ cvv : "111",
+},
+}
