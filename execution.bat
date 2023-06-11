@@ -1,4 +1,4 @@
-@echo off
-start cmd /k "cd %~dp0 && java -jar selenium-server-4.9.1.jar hub --port 4444" 
-start cmd /k "cd %~dp0 && java -Dwebdriver.chrome.driver=%~dp0\Drivers\chromedriver_v114.exe -jar selenium-server-4.9.1.jar node --port 5555 --host localhost" 
-start cmd /k "cd %~dp0 && mvn test"
+cd %~dp0
+start cmd /k "start /B java -jar selenium-server-4.9.1.jar hub --port 4444 && title Selenium_Grid_Hub" 
+start cmd /k "start /B java -Dwebdriver.chrome.driver=%~dp0\Drivers\chromedriver_v114.exe -jar selenium-server-4.9.1.jar node --port 5555 --host localhost && title Selenium_Grid_Node" 
+start cmd /k "mvn clean test && mytaskkill.bat"

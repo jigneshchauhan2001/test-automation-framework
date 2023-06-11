@@ -2,45 +2,45 @@
 <testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
   <reporter-output>
     <line>
-      <![CDATA[06-Jun-2023 05:02:50 pm : Opening application URL. https://coolstuffqat.fivebelow.com]]>
+      <![CDATA[10-Jun-2023 08:33:16 pm : Opening application URL. https://coolstuffqat.fivebelow.com]]>
     </line>
     <line>
-      <![CDATA[06-Jun-2023 05:02:55 pm : Accpeting browser cookies]]>
+      <![CDATA[10-Jun-2023 08:33:20 pm : Accpeting browser cookies]]>
     </line>
     <line>
-      <![CDATA[06-Jun-2023 05:02:58 pm : Clicking sign up close button in home page]]>
+      <![CDATA[10-Jun-2023 08:33:24 pm : Clicking sign up close button in home page]]>
     </line>
   </reporter-output>
-  <suite started-at="2023-06-06T17:02:48 IST" name="Default Suite" finished-at="2023-06-06T17:03:02 IST" duration-ms="13886">
+  <suite started-at="2023-06-10T20:33:14 IST" name="Default Suite" finished-at="2023-06-10T20:33:27 IST" duration-ms="13394">
     <groups>
       <group name="DESKTOP_REGRESSION">
-        <method signature="LoginPageTestCases.LoginFirstTest()[pri:0, instance:ecommerce.testcases.LoginPageTestCases@5b3bf934]" name="LoginFirstTest" class="ecommerce.testcases.LoginPageTestCases"/>
+        <method signature="LoginPageTestCases.LoginFirstTest()[pri:0, instance:ecommerce.testcases.LoginPageTestCases@14743a75]" name="LoginFirstTest" class="ecommerce.testcases.LoginPageTestCases"/>
       </group> <!-- DESKTOP_REGRESSION -->
     </groups>
-    <test started-at="2023-06-06T17:02:48 IST" name="Default XmlTest name ef5b3c89-f85c-471e-af88-727aef874e29" finished-at="2023-06-06T17:03:02 IST" duration-ms="13886">
+    <test started-at="2023-06-10T20:33:14 IST" name="Default XmlTest name befc87bb-e4df-4b6d-81e7-c18903872621" finished-at="2023-06-10T20:33:27 IST" duration-ms="13394">
       <class name="ecommerce.testcases.LoginPageTestCases">
-        <test-method is-config="true" signature="assignDriver()[pri:0, instance:ecommerce.testcases.LoginPageTestCases@5b3bf934]" started-at="2023-06-06T17:02:48 IST" name="assignDriver" finished-at="2023-06-06T17:02:50 IST" duration-ms="2397" status="PASS">
+        <test-method is-config="true" signature="assignDriver()[pri:0, instance:ecommerce.testcases.LoginPageTestCases@14743a75]" started-at="2023-06-10T20:33:14 IST" name="assignDriver" finished-at="2023-06-10T20:33:16 IST" duration-ms="2297" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- assignDriver -->
-        <test-method signature="LoginFirstTest()[pri:0, instance:ecommerce.testcases.LoginPageTestCases@5b3bf934]" started-at="2023-06-06T17:02:50 IST" name="LoginFirstTest" finished-at="2023-06-06T17:03:01 IST" duration-ms="11218" status="PASS">
+        <test-method signature="LoginFirstTest()[pri:0, instance:ecommerce.testcases.LoginPageTestCases@14743a75]" started-at="2023-06-10T20:33:16 IST" name="LoginFirstTest" finished-at="2023-06-10T20:33:27 IST" duration-ms="10834" status="PASS">
           <reporter-output>
             <line>
-              <![CDATA[06-Jun-2023 05:02:50 pm : Opening application URL. https://coolstuffqat.fivebelow.com]]>
+              <![CDATA[10-Jun-2023 08:33:16 pm : Opening application URL. https://coolstuffqat.fivebelow.com]]>
             </line>
             <line>
-              <![CDATA[06-Jun-2023 05:02:55 pm : Accpeting browser cookies]]>
+              <![CDATA[10-Jun-2023 08:33:20 pm : Accpeting browser cookies]]>
             </line>
             <line>
-              <![CDATA[06-Jun-2023 05:02:58 pm : Clicking sign up close button in home page]]>
+              <![CDATA[10-Jun-2023 08:33:24 pm : Clicking sign up close button in home page]]>
             </line>
           </reporter-output>
         </test-method> <!-- LoginFirstTest -->
-        <test-method is-config="true" signature="closeDriver()[pri:0, instance:ecommerce.testcases.LoginPageTestCases@5b3bf934]" started-at="2023-06-06T17:03:01 IST" name="closeDriver" finished-at="2023-06-06T17:03:02 IST" duration-ms="142" status="PASS">
+        <test-method is-config="true" signature="closeDriver()[pri:0, instance:ecommerce.testcases.LoginPageTestCases@14743a75]" started-at="2023-06-10T20:33:27 IST" name="closeDriver" finished-at="2023-06-10T20:33:27 IST" duration-ms="152" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- closeDriver -->
       </class> <!-- ecommerce.testcases.LoginPageTestCases -->
-    </test> <!-- Default XmlTest name ef5b3c89-f85c-471e-af88-727aef874e29 -->
+    </test> <!-- Default XmlTest name befc87bb-e4df-4b6d-81e7-c18903872621 -->
   </suite> <!-- Default Suite -->
 </testng-results>
