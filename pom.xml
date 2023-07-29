@@ -9,8 +9,10 @@
 		<!-- <aspectj.version>1.9.19</aspectj.version>  -->
 		<org.snakeyaml.version>1.19</org.snakeyaml.version>
 	</properties>
+	
 
 	<dependencies>
+
 		<!-- dont provide scope in testng property. -->
 		<dependency>
 			<groupId>org.testng</groupId>
@@ -40,11 +42,21 @@
 		</dependency>
 
 
+
 		<dependency>
 			<groupId>org.yaml</groupId>
 			<artifactId>snakeyaml</artifactId>
 			<version>${org.snakeyaml.version}</version>
 		</dependency>
+		
+		<dependency>
+    <groupId>com.fasterxml.jackson.dataformat</groupId>
+    <artifactId>jackson-dataformat-yaml</artifactId>
+    <version>2.13.0</version> <!-- Use the latest version available -->
+</dependency>
+
+	
+
 		
 		<!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml -->
 <dependency>

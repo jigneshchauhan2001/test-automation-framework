@@ -4,4 +4,5 @@ public class TestGroups {
 
 	public final static String DESKTOP_REGRESSION = "DESKTOP_REGRESSION";
 	public static final String RMS_TEST = "RMS_TEST";
+	public static final String MODIFY_YAML_TESTS = "MODIFY_YAML_TESTS";
 }

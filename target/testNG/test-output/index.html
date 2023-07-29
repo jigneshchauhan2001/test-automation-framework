@@ -103,7 +103,7 @@
                     <div class="method-list-content passed suite-Default_Suite">
                       <span>
                         <img src="passed.png" width="3%"/>
-                        <a href="#" panel-name="suite-Default_Suite" title="ecommerce.testcases.LoginPageTestCases" class="method navigator-link" hash-for-method="LoginFirstTest">LoginFirstTest</a> <!-- method navigator-link -->
+                        <a href="#" panel-name="suite-Default_Suite" title="ecommerce.testcases.ModifyYamlDemo" class="method navigator-link" hash-for-method="modifyYamlFileTest">modifyYamlFileTest</a> <!-- method navigator-link -->
                       </span>
                       <br/>
                     </div> <!-- method-list-content passed suite-Default_Suite -->
@@ -121,14 +121,14 @@
           <div class="suite-Default_Suite-class-passed">
             <div class="main-panel-header rounded-window-top">
               <img src="passed.png"/>
-              <span class="class-name">ecommerce.testcases.LoginPageTestCases</span>
+              <span class="class-name">ecommerce.testcases.ModifyYamlDemo</span>
             </div> <!-- main-panel-header rounded-window-top -->
             <div class="main-panel-content rounded-window-bottom">
               <div class="method">
                 <div class="method-content">
-                  <a name="LoginFirstTest">
-                  </a> <!-- LoginFirstTest -->
-                  <span class="method-name">LoginFirstTest</span>
+                  <a name="modifyYamlFileTest">
+                  </a> <!-- modifyYamlFileTest -->
+                  <span class="method-name">modifyYamlFileTest</span>
                 </div> <!-- method-content -->
               </div> <!-- method -->
             </div> <!-- main-panel-content rounded-window-bottom -->
@@ -142,10 +142,10 @@
 &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
 &lt;!DOCTYPE suite SYSTEM &quot;https://testng.org/testng-1.0.dtd&quot;&gt;
 &lt;suite parallel=&quot;methods&quot; data-provider-thread-count=&quot;1&quot; name=&quot;Default Suite&quot;&gt;
-  &lt;test thread-count=&quot;5&quot; parallel=&quot;methods&quot; name=&quot;Default XmlTest name befc87bb-e4df-4b6d-81e7-c18903872621&quot;&gt;
+  &lt;test thread-count=&quot;5&quot; parallel=&quot;methods&quot; name=&quot;Default XmlTest name 2753ab4b-c2e4-468e-952c-ffc526484c89&quot;&gt;
     &lt;groups&gt;
       &lt;run&gt;
-        &lt;include name=&quot;DESKTOP_REGRESSION&quot;/&gt;
+        &lt;include name=&quot;MODIFY_YAML_TESTS&quot;/&gt;
       &lt;/run&gt;
     &lt;/groups&gt;
     &lt;packages&gt;
@@ -153,8 +153,9 @@
     &lt;/packages&gt;
     &lt;classes&gt;
       &lt;class name=&quot;ecommerce.testcases.LoginPageTestCases&quot;/&gt;
+      &lt;class name=&quot;ecommerce.testcases.ModifyYamlDemo&quot;/&gt;
     &lt;/classes&gt;
-  &lt;/test&gt; &lt;!-- Default XmlTest name befc87bb-e4df-4b6d-81e7-c18903872621 --&gt;
+  &lt;/test&gt; &lt;!-- Default XmlTest name 2753ab4b-c2e4-468e-952c-ffc526484c89 --&gt;
 &lt;/suite&gt; &lt;!-- Default Suite --&gt;
             </pre>
           </div> <!-- main-panel-content rounded-window-bottom -->
@@ -166,7 +167,7 @@
           <div class="main-panel-content rounded-window-bottom">
             <ul>
               <li>
-                <span class="test-name">Default XmlTest name befc87bb-e4df-4b6d-81e7-c18903872621 (1 class)</span>
+                <span class="test-name">Default XmlTest name 2753ab4b-c2e4-468e-952c-ffc526484c89 (2 classes)</span>
               </li>
             </ul>
           </div> <!-- main-panel-content rounded-window-bottom -->
@@ -177,10 +178,10 @@
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
             <div class="test-group">
-              <span class="test-group-name">DESKTOP_REGRESSION</span>
+              <span class="test-group-name">MODIFY_YAML_TESTS</span>
               <br/>
               <div class="method-in-group">
-                <span class="method-in-group-name">LoginFirstTest</span>
+                <span class="method-in-group-name">modifyYamlFileTest</span>
                 <br/>
               </div> <!-- method-in-group -->
             </div> <!-- test-group -->
@@ -202,14 +203,14 @@ data.addColumn('string', 'Class');
 data.addColumn('number', 'Time (ms)');
 data.addRows(1);
 data.setCell(0, 0, 0)
-data.setCell(0, 1, 'LoginFirstTest')
-data.setCell(0, 2, 'ecommerce.testcases.LoginPageTestCases')
-data.setCell(0, 3, 10834);
+data.setCell(0, 1, 'modifyYamlFileTest')
+data.setCell(0, 2, 'ecommerce.testcases.ModifyYamlDemo')
+data.setCell(0, 3, 115);
 window.suiteTableData['Default_Suite']= { tableData: data, tableDiv: 'times-div-Default_Suite'}
 return data;
 }
               </script>
-              <span class="suite-total-time">Total running time: 10 seconds</span>
+              <span class="suite-total-time">Total running time: 115 ms</span>
               <div id="times-div-Default_Suite">
               </div> <!-- times-div-Default_Suite -->
             </div> <!-- times-div -->
@@ -220,21 +221,20 @@ return data;
             <span class="header-content">Reporter output for Default Suite</span>
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
-            <div class="reporter-method-div">
-              <span class="reporter-method-name">LoginFirstTest</span>
-              <div class="reporter-method-output-div">
-                <span class="reporter-method-output">10-Jun-2023 08:33:16 pm : Opening application URL. https://coolstuffqat.fivebelow.com</span>
-                <span class="reporter-method-output">10-Jun-2023 08:33:20 pm : Accpeting browser cookies</span>
-                <span class="reporter-method-output">10-Jun-2023 08:33:24 pm : Clicking sign up close button in home page</span>
-              </div> <!-- reporter-method-output-div -->
-            </div> <!-- reporter-method-div -->
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->
         <div panel-name="ignored-methods-Default_Suite" class="panel">
           <div class="main-panel-header rounded-window-top">
-            <span class="header-content">0 ignored methods</span>
+            <span class="header-content">1 ignored method</span>
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
+            <div class="ignored-class-div">
+              <span class="ignored-class-name">ecommerce.testcases.LoginPageTestCases</span>
+              <div class="ignored-methods-div">
+                <span class="ignored-method-name">LoginFirstTest</span>
+                <br/>
+              </div> <!-- ignored-methods-div -->
+            </div> <!-- ignored-class-div -->
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->
         <div panel-name="chronological-Default_Suite" class="panel">
@@ -243,18 +243,18 @@ return data;
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
             <div class="chronological-class">
-              <div class="chronological-class-name">ecommerce.testcases.LoginPageTestCases</div> <!-- chronological-class-name -->
+              <div class="chronological-class-name">ecommerce.testcases.ModifyYamlDemo</div> <!-- chronological-class-name -->
               <div class="configuration-method before">
                 <span class="method-name">assignDriver</span>
                 <span class="method-start">0 ms</span>
               </div> <!-- configuration-method before -->
               <div class="test-method">
-                <span class="method-name">LoginFirstTest</span>
-                <span class="method-start">2361 ms</span>
+                <span class="method-name">modifyYamlFileTest</span>
+                <span class="method-start">2312 ms</span>
               </div> <!-- test-method -->
               <div class="configuration-method after">
                 <span class="method-name">closeDriver</span>
-                <span class="method-start">13211 ms</span>
+                <span class="method-start">2438 ms</span>
               </div> <!-- configuration-method after -->
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->

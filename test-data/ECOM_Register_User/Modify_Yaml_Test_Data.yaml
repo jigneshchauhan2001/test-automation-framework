@@ -1,0 +1,9 @@
+modifyYamlFileTest: !!ecommerce.testData.yaml.ModifyYamlTestData
+  cardDetails:
+    cardNumber: updatednewcard
+    cvv: '111'
+    expiryMonth: '12'
+    expiryYear: '2027'
+  itemDetails:
+    email: updatednewemail
+    password: testengineer@1
