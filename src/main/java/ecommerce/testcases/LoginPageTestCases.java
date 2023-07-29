@@ -9,6 +9,7 @@ import ecommerce.testData.yaml.LoginPageTestData;
 import framework.core.WebDriverFactory;
 import framework.testNG.RetryAnalyzer;
 import framework.testNG.TestGroups;
+import framework.utils.YamlUtils;
 
 public class LoginPageTestCases extends WebDriverFactory {
 
@@ -31,4 +32,9 @@ public class LoginPageTestCases extends WebDriverFactory {
 //		System.out.println(loginPageTestData.cardDetails.cvv);
 		
 	}
+	
+	
+	
+	
 }
+

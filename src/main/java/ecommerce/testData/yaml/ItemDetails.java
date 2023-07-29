@@ -4,5 +4,4 @@ public class ItemDetails {
 
 	public String email;
 	public String password;
-
 }
