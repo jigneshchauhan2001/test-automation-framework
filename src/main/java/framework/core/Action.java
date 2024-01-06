@@ -39,23 +39,40 @@ public class Action {
 		return driver;
 	}
 
+	/**
+	 * @desc this method will store given value against the given key in the hashmap
+	 * @param key
+	 * @param value
+	 * @return
+	 */
+	public synchronized void storeKeyValue(String key,Object value) {
+		storageMap.put(key,value);
+	}
+	
+	
+	/**
+	 * @desc this method will return the value of given key from storage hashmap
+	 * @param key
+	 * @return Object
+	 */
+	public synchronized Object retrieveKeyValue(String key) {
+		return storageMap.get(key);
+	}
+	
+	
+	/** 
+	 * @desc this method will delete the value of given key from storage hashmap
+	 * @param key
+	 */
+	public synchronized void deleteKeyValue(String key) {
+		storageMap.remove(key);
+	}
+	
+	
 	public HashMap<String, Object> getHashKey() {
 		return storageMap;
 	}
 
-	public synchronized void storeKeyValue(String key, String value) {
-		storageMap.put(key, value);
-	}
-
-	public synchronized Object retrieveKeyValue(String key) {
-		Object hashValue = storageMap.get(key);
-		return hashValue;
-	}
-
-	public Action deleteKeyValue(String key) {
-		storageMap.remove(key);
-		return this;
-	}
 
 	
 	
@@ -106,6 +123,57 @@ public class Action {
 		}
 		return this;
 	}
+	
+	
+	
+	/**
+	 * @Description This method will wait for the visibility of element located by xpath for the given timeout specified in method argument
+	 * @param element
+	 * @throws runtime exception
+	 */
+	public Action WaitForElementToBeVisible(Element element, int timeoutInSeconds) {
+		try {
+			WebDriverWait wait = new WebDriverWait(WebDriverFactory.getDriver(),
+					Duration.ofSeconds(timeoutInSeconds));
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(element.getElementValue())));
+		} catch (Exception e) {
+			throw new RuntimeException(element.getElementValue() + " not visible in the page. ", e);
+		}
+		return this;
+	}
+
+	/**
+	 * @Description This method will wait for the presence of element located by xpath for the given timeout specified in method argument
+	 * @param element
+	 * @throws runtime exception
+	 */
+	public Action WaitForElementPresence(Element element, int timeoutInSeconds) {
+		try {
+			WebDriverWait wait = new WebDriverWait(WebDriverFactory.getDriver(),
+					Duration.ofSeconds(timeoutInSeconds));
+			wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(element.getElementValue())));
+		} catch (Exception e) {
+			throw new RuntimeException(element.getElementValue() + " not present in the page. ", e);
+		}
+		return this;
+	}
+
+	/**
+	 * @Description This method will wait for the element to be clickable located by xpath for the given timeout specified in method argument
+	 * @param element
+	 * @throws runtime exception
+	 */
+	public Action WaitForElementToBeClickable(Element element, int timeoutInSeconds) {
+		try {
+			WebDriverWait wait = new WebDriverWait(WebDriverFactory.getDriver(),
+					Duration.ofSeconds(timeoutInSeconds));
+			wait.until(ExpectedConditions.elementToBeClickable(By.xpath(element.getElementValue())));
+		} catch (Exception e) {
+			throw new RuntimeException(element.getElementValue() + " not clickable in the page. ", e);
+		}
+		return this;
+	}
+
 
 	
 	/**
@@ -191,48 +259,7 @@ public class Action {
 		return this;
 	}
 
-	/**
-	 * @Description this method will wait for presence,visible and clickable of element and will send keys only when maskFlag is true & will mask value string as per requirements.
-	 * @param element
-	 * @param value
-	 * @param maskFlag
-	 * @return
-	 */
-	public Action SendKeys(Element element, String value, boolean maskFlag) {
-		try {
-			// masking
-			if (maskFlag == false) {
-				return this;
-			}
-			String maskedData = "";
-			if (element.getElementName().equalsIgnoreCase("Worldpay credit card number text field")) {
-				if (value.length() == 16) {
-					maskedData = value.substring(0, value.length() - 4);
-					int cardNumberLength = maskedData.length();
-					for (int i = value.length() - 1; i >= cardNumberLength; i--) {
-						maskedData = maskedData.concat("*");
-					}
-				} else {
-					maskedData = value.replace(".", "*");
-				}
-			} else {
-				maskedData = value.replace(".", "*");
-			}
-
-			WaitForElementPresence(element);
-			WaitForElementToBeVisible(element);
-			WaitForElementToBeClickable(element);
-
-			driver.findElement(By.xpath(element.getElementValue())).click();
-			driver.findElement(By.xpath(element.getElementValue())).clear();
-			driver.findElement(By.xpath(element.getElementValue())).sendKeys(value);
-		} catch (Exception e) {
-			throw new RuntimeException(
-					"Not able to type the value " + value + " in the textbox " + element.getElementName(), e);
-		}
-		return this;
-	}
-
+	
 	/**
 	 * @Description : Used to wait for specific time
 	 * @param seconds
@@ -402,8 +429,23 @@ public class Action {
 	
 	
 	/**
-	 * @Description : this method will wait for the disappearance of element located by xpath for the given timeout specified in properties file
-	 * @param element
+	 * @Description : this method will wait for the presence element located by xpath for the given timeout specified in the method arguments. Returns true if found else false if not found.
+	 * @param element,timeOutInSeconds
+	 * @throws runTimeException
+	 */
+	public boolean IsElementPresent(Element element, int timeOutInSeconds) {
+		try {
+			WaitForElementPresence(element,timeOutInSeconds);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+	
+	
+	/**
+	 * @Description : this method will wait for the disappearance of element located by xpath for the given timeout specified in the properties file.
+	 * @param element, timeOutInSeconds
 	 * @throws runTimeException
 	 */
 	public Action waitForElementInvisibility(Element element) {
@@ -418,8 +460,22 @@ public class Action {
 	
 	
 	/**
-	 * @Description : this method will wait for the visibility element located by xpath for the given timeout specified in properties file. Returns true if found else false if not found.
-	 * @param element
+	 * @Description : this method will wait for the visibility element located by xpath for the given timeout specified in the method argument. Returns true if found else false if not found.
+	 * @param element,timeOutInSeconds
+	 * @throws runTimeException
+	 */
+	public boolean IsElementVisible(Element element, int timeOutInSeconds) {
+		try {
+			WaitForElementToBeVisible(element,timeOutInSeconds);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+	
+	/**
+	 * @Description : this method will wait for the visibility element located by xpath for the given timeout specified in the properties fioe. Returns true if found else false if not found.
+	 * @param element,timeOutInSeconds
 	 * @throws runTimeException
 	 */
 	public boolean IsElementVisible(Element element) {
@@ -430,6 +486,7 @@ public class Action {
 			return false;
 		}
 	}
+		
 	
 	
 	/**
@@ -501,6 +558,19 @@ public class Action {
 			throw new RuntimeException("Not able to select the option which is on index "+index+" in "+element.getElementName(),e);
 		}
 		return value;
+	}
+	
+	
+	/**
+	 * @desc this method will wait for specific time
+	 * @param seconds
+	 */
+	public void waitFor(int seconds) {
+		try {
+			Thread.sleep(seconds*1000);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	

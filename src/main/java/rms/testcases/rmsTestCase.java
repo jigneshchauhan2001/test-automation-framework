@@ -16,15 +16,10 @@ import rms.testData.excel.RMSProperties;
 
 public class rmsTestCase extends WebDriverFactory{
 
-	@Test(groups = {TestGroups.RMS_TEST})
-	public static void rmsFirstTestCase() {
+	@Test(groups = {TestGroups.RMS_TEST},dataProvider = "RMSExcelDataProvider",dataProviderClass = RMSExcelUtils.class)
+	public static void rmsFirstTestCase(String scenarioID,String scenarioDescription) {
 		
-		// reading data from excel 
-		RMSExcelUtils.readRMSExcelSheets(RMSProperties.EXCEL_PATH.toString(), RMSProperties.EXCEL_PO_SHEET_NAME.toString(), RMSProperties.EXCEL_ITEM_DATA_SHEET_NAME.toString());
-		
-		for (int i = 0; i < RMSExcelUtils.getScenarioIds.size(); i++) {
-			POData poData=RMSExcelUtils.fetchData(RMSExcelUtils.getScenarioIds.get(i));
-			
+			POData poData = RMSExcelUtils.fetchData(scenarioID);
 			System.out.println(poData.scenarioID);
 			System.out.println(poData.scenarioDescription);
 			System.out.println(poData.supplierID);
@@ -35,7 +30,6 @@ public class rmsTestCase extends WebDriverFactory{
 				 System.out.println(itemData.itemID);
 				 System.out.println(itemData.itemQuantity);
 			}
-		}
 		
 		// testing write method
 		Map<Integer, String> rowNumberPoNumberMap = new HashMap<>();
@@ -47,4 +41,5 @@ public class rmsTestCase extends WebDriverFactory{
 		RMSExcelUtils.writingPONumberBackToPoSheet(RMSProperties.EXCEL_PATH.toString(),  RMSProperties.EXCEL_PO_SHEET_NAME.toString(), RMSProperties.EXCEL_PO_SHEET_COLUMN_PO_NUMBER.toString(), rowNumberPoNumberMap);
 		
 	}
+
 }

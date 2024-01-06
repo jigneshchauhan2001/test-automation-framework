@@ -21,33 +21,47 @@ public class Trigger {
 		// loadig properties file
 		try {
 			TestProperties.loadProperties("test.properties");
-			RMSProperties.loadProperties("test-data\\RMS_Data\\rms.properties");
+			//RMSProperties.loadProperties("test-data\\RMS_Data\\rms.properties");
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
-		
 		
 		XmlSuite suite = new XmlSuite();
 		suite.setParallel(XmlSuite.ParallelMode.METHODS);
 		suite.setThreadCount((int)TestProperties.TESTNG_THREAD_COUNT.toInteger());
 		suite.setDataProviderThreadCount((int)TestProperties.TESTNG_DATAPROVIDER_THREAD_COUNT.toInteger());
-		
 		List<XmlPackage> testPackages = new ArrayList<XmlPackage>();
 		String[] packages = TestProperties.TESTNG_TESTCASE_PACKAGE.toString().split(",");
 		for (int i = 0; i < packages.length; i++) {
 			testPackages.add(new XmlPackage(packages[i]));
 		}
-		XmlTest test = new XmlTest(suite);
-		test.setPackages(testPackages);
-		
-		String[] testGroupsIncluded = TestProperties.TESTNG_GROUP_INCLUDE.toString().split(",");
-		for (int i = 0; i < testGroupsIncluded.length; i++) {
-			test.addIncludedGroup(testGroupsIncluded[i]);
+	
+		if (TestProperties.APPLICATION_URL.toString().contains(".exe") || TestProperties.APPLICATION_URL.toString().contains(".apk") || TestProperties.APPLICATION_URL.toString().contains(".ipa")) {
+			for (int i = 1; i <=(int)TestProperties.APPIUM_SERVER_COUNT.getProperty(); i++) {
+				XmlTest test=new XmlTest(suite);
+				test.setPackages(testPackages);
+				test.addIncludedGroup(TestProperties.TESTNG_GROUP_INCLUDE.toString());
+				String[] includedGroups=TestProperties.TESTNG_GROUP_INCLUDE.toString().split(",");
+				for (int j = 0; j <= includedGroups.length-1; j++) {
+					test.addIncludedGroup(includedGroups[j]);
+				}
+				System.out.println((String)TestProperties.valueOf("APPIUM_SERVER1"+"_HOST").getProperty());
+				test.addParameter("appiumServerHost", (String)TestProperties.valueOf("APPIUM_SERVER"+i+"_HOST").getProperty());
+				System.out.println((String)TestProperties.valueOf("APPIUM_SERVER"+i+"_HOST").getProperty());
+				test.addParameter("appiumServerPort", (String)TestProperties.valueOf("APPIUM_SERVER"+i+"_PORT").getProperty());
+				test.setName("Test-"+i);
+			}
+		}else {
+			XmlTest test=new XmlTest(suite);
+			test.setPackages(testPackages);
+			test.addIncludedGroup(TestProperties.TESTNG_GROUP_INCLUDE.toString());
+			String[] includedGroups=TestProperties.TESTNG_GROUP_INCLUDE.toString().split(",");
+			for (int j = 0; j <= includedGroups.length-1; j++) {
+				test.addIncludedGroup(includedGroups[j]);
+			}
 		}
-		
 		List<XmlSuite> suites = new ArrayList<XmlSuite>();
 		suites.add(suite);
-		
 		TestNG testNG = new TestNG();
 		testNG.setOutputDirectory(new StringBuilder().append("./target/testNG/test-output").toString());
 		testNG.setXmlSuites(suites);
@@ -55,10 +69,7 @@ public class Trigger {
 		TestMonitor testMonitor=new TestMonitor();
 		testNG.addListener((ITestNGListener)testMonitor);
 		
-		//testNG.setDataProviderThreadCount((int)(int)TestProperties.TESTNG_DATAPROVIDER_THREAD_COUNT.toInteger());
-		
-		// add code for listerns and allre reports when you add
-		
+		testNG.setDataProviderThreadCount((int)(int)TestProperties.TESTNG_DATAPROVIDER_THREAD_COUNT.toInteger());
 		testNG.run();
 		System.exit(0);
 	}

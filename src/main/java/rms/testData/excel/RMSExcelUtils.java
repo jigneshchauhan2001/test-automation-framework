@@ -179,9 +179,10 @@ public class RMSExcelUtils {
 	}
 	
 	
-	@DataProvider(name = "RMSExcelDataProvider", parallel = true)
+	@DataProvider(name = "RMSExcelDataProvider", parallel = false)
 	public static Object[][] RMSExcelDataProvider(){
 		RMSExcelUtils.readRMSExcelSheets(RMSProperties.EXCEL_PATH.toString(), RMSProperties.EXCEL_PO_SHEET_NAME.toString(), RMSProperties.EXCEL_ITEM_DATA_SHEET_NAME.toString());
+		System.out.println(getAllSceanrioIdsAndDescriptions().length + " is length");
 		return getAllSceanrioIdsAndDescriptions();
 	}
 	
