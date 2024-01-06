@@ -16,6 +16,7 @@ import org.testng.IHookable;
 import org.testng.ITestResult;
 import org.testng.TestListenerAdapter;
 
+import framework.appium.core.AppiumDriverFactory;
 import framework.core.WebDriverFactory;
 import io.qameta.allure.Allure;
 
@@ -33,14 +34,24 @@ public class TestMonitor  extends TestListenerAdapter implements IHookable,IExec
 		File destination=new File(screenshotLocation);
 		File source=null;
 		
-		// generating screeshots under screenshot folder in testNG folder in target folder.
-		try {
-			source =((TakesScreenshot)WebDriverFactory.getDriver()).getScreenshotAs(OutputType.FILE);
-			FileUtils.copyFile(source, destination);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 		
+		
+		if (WebDriverFactory.getDriver() != null) {
+			// generating screeshots under screenshot folder in testNG folder in target folder.
+			try {
+				source =((TakesScreenshot)WebDriverFactory.getDriver()).getScreenshotAs(OutputType.FILE);
+				FileUtils.copyFile(source, destination);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else if (AppiumDriverFactory.getDriver()!= null) {
+			try {
+				source =((TakesScreenshot)AppiumDriverFactory.getDriver()).getScreenshotAs(OutputType.FILE);
+				FileUtils.copyFile(source, destination);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 		// attaching screenshots in TestNG and allure reports
 		try {
 			TestNGUtils.reportLog("<a href=" + "../screenshot/"+testcaseName+"_"+testFailureTime+".PNG" + " target=_blank>SCREENSHOT</a>");

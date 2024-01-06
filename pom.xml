@@ -10,7 +10,6 @@
 		<org.snakeyaml.version>1.19</org.snakeyaml.version>
 	</properties>
 	
-
 	<dependencies>
 
 		<!-- dont provide scope in testng property. -->
@@ -24,8 +23,22 @@
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-java</artifactId>
-			<version>4.9.1</version>
+			<version>4.12.1</version>
 		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/io.appium/java-client -->
+		<dependency>
+    		<groupId>io.appium</groupId>
+    		<artifactId>java-client</artifactId>
+    		<version>8.5.1</version>
+		</dependency>
+
+		
+		  <dependency>
+        <groupId>org.reflections</groupId>
+        <artifactId>reflections</artifactId>
+        <version>0.9.12</version> <!-- Use the latest version -->
+    </dependency>
 
 		<!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
 		<dependency>
@@ -48,6 +61,22 @@
 			<artifactId>snakeyaml</artifactId>
 			<version>${org.snakeyaml.version}</version>
 		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/com.opencsv/opencsv -->
+		<dependency>
+    		<groupId>com.opencsv</groupId>
+    		<artifactId>opencsv</artifactId>
+    		<version>5.9</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/com.jcraft/jsch -->
+		<dependency>
+    		<groupId>com.jcraft</groupId>
+    		<artifactId>jsch</artifactId>
+    		<version>0.1.55</version>
+		</dependency>
+
+
 		
 		<dependency>
     <groupId>com.fasterxml.jackson.dataformat</groupId>

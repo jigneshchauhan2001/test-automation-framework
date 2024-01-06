@@ -16,6 +16,8 @@ public class Element {
 	public static final String LINKTEXT="LINKTEXT";
 	public static final String PARTIALLINKTEXT="PARTIALLINKTEXT";
 	public static final String TAGNAME="TAGNAME";
+	public static final String ACCESSIBILITYID="ACCESSIBILITYID";
+	public static final String RUNTIMEID="RUNTIMEID";
 	
 	
 	
