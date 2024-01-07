@@ -33,6 +33,7 @@ rms\testData\excel\RMSExcelUtils.class
 ecommerce\testcases\AppiumDriverFactoryTestClass.class
 framework\utils\CSVUtilities.class
 rms\testData\excel\POData.class
+framework\core\ExecutionEnvironment.class
 ecommerce\entities\Start.class
 ecommerce\pagefactory\PageFactory.class
 framework\utils\TestProperties.class
@@ -40,6 +41,7 @@ framework\testNG\TestNGUtils$LogType.class
 ecommerce\testData\yaml\LoginPageTestData.class
 framework\appium\core\AppiumDriverFactory$1.class
 framework\testNG\TestMonitor.class
+framework\core\ExecutionSetup.class
 rms\testData\excel\RMSProperties.class
 framework\core\WebDriverFactory$1.class
 ecommerce\actions\HomePageAction.class

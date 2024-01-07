@@ -162,8 +162,6 @@
 					<mainClass>framework.testNG.Trigger</mainClass>
 				</configuration>
 			</plugin>
-
-
 		</plugins>
 
 	</build>

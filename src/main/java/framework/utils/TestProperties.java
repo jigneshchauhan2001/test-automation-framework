@@ -8,6 +8,7 @@ import java.util.Properties;
 public enum TestProperties {
 
 	// u can provide null value here as we are reading value from properties file so what value you define there that it will be replaced here
+	TEST_EXECUTION_ENVRIONMENT("test.execution.environment", null,Type.String),
 	APPLICATION_URL("test.url", null, Type.String), 
 	TESTNG_THREAD_COUNT("testng.thread.count", null, Type.Integer),
 	TESTNG_DATAPROVIDER_THREAD_COUNT("testng.dataProvider.thread.count", null, Type.Integer),
@@ -72,9 +73,14 @@ public enum TestProperties {
 		return Boolean.parseBoolean(this.value.toString());
 	}
 
-	public static void loadProperties(String testPropertyFile) throws FileNotFoundException, IOException {
+	public static void loadProperties(String testPropertyFile) {
 		Properties p = new Properties();
-		p.load(new FileInputStream(testPropertyFile));
+		try {
+			p.load(new FileInputStream(testPropertyFile));
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException("Unable to load property file : "+testPropertyFile+ " error message : "+e.getMessage());
+		} 
 
 		for (TestProperties testProperty : TestProperties.values()) {
 			String valFromFile = p.getProperty(testProperty.key);
