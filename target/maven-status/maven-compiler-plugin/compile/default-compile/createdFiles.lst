@@ -18,7 +18,7 @@ framework\utils\SFTPproperties.class
 framework\appium\core\KeyBoardConstants.class
 framework\utils\ExcelUtils.class
 framework\utils\SFTPproperties$Type.class
-ecommerce\testData\yaml\ModifyYamlTestData.class
+ecommerce\testcases\Main.class
 framework\appium\core\AppiumDriverFactory.class
 framework\core\BasePage.class
 framework\core\Element.class
@@ -38,7 +38,9 @@ ecommerce\entities\Start.class
 ecommerce\pagefactory\PageFactory.class
 framework\utils\TestProperties.class
 framework\testNG\TestNGUtils$LogType.class
+framework\utils\AppiumPropperties$Type.class
 ecommerce\testData\yaml\LoginPageTestData.class
+framework\utils\AppiumPropperties.class
 framework\appium\core\AppiumDriverFactory$1.class
 framework\testNG\TestMonitor.class
 framework\core\ExecutionSetup.class

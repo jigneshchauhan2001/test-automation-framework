@@ -19,20 +19,8 @@ public enum TestProperties {
 	SELENIUM_HUB_PORT("selenium.hub.port", null, Type.String),
 	MOBILE_EXECUTUION("mobile.execution", null, Type.String),
 	TEST_TIMEOUT("test.timeout", null, Type.Integer),
-	TESTCASE_RETRY_COUNT("testcase.retry.count", null,Type.Integer),
+	TESTCASE_RETRY_COUNT("testcase.retry.count", null,Type.Integer);
 
-	// Appium Properties
-	APPIUM_PLATFORM_NAME("appium.platform.name",null,Type.String),
-	APPIUM_DEVICE_NAME("appium.device.name",null,Type.String),
-	APPIUM_APP_NAME("appium.app.name",null,Type.String),
-	APPIUM_APP_PACKAGE_NAME("appium.appPackage.name",null,Type.String),
-	APPIUM_APP_ACTIVITY_NAME("appium.appActivity.name",null,Type.String), 
-	APPIUM_SERVER_COUNT("appium.server.count", null,Type.Integer),
-	APPIUM_SERVER1_HOST("appium.server1.host", null,Type.String),
-	APPIUM_SERVER2_HOST("appium.server2.host", null,Type.String),
-	APPIUM_SERVER1_PORT("appium.server1.port", null,Type.String),
-	APPIUM_SERVER2_PORT("appium.server2.port", null,Type.String);
-	
 	
 	private String key;
 	private Object value;

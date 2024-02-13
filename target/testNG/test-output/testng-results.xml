@@ -1,92 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results ignored="0" total="2" passed="2" failed="0" skipped="0">
+<testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
   <reporter-output>
     <line>
-      <![CDATA[07-Jan-2024 03:14:58 PM : <font face="Calibri, sans-serif">Hello I am regular log</font>]]>
-    </line>
-    <line>
-      <![CDATA[07-Jan-2024 03:14:58 PM : &nbsp;&bull;&nbsp;<font face="Calibri, sans-serif">Hello I am step</font>]]>
-    </line>
-    <line>
-      <![CDATA[07-Jan-2024 03:14:58 PM : <font face="Calibri, sans-serif" size="2">&nbsp;&cir;&nbsp;Hello I am substep</font>]]>
-    </line>
-    <line>
-      <![CDATA[07-Jan-2024 03:14:58 PM : <font face="Calibri, sans-serif" color="green"><b>Hello I am verfication step</b></font>]]>
-    </line>
-    <line>
-      <![CDATA[07-Jan-2024 03:14:58 PM : <font face="Calibri, sans-serif" size="2" color="green">&bull; <b>Hello I am inner verification step</b></font>]]>
-    </line>
-    <line>
-      <![CDATA[07-Jan-2024 03:14:58 PM : <font face="Calibri, sans-serif" color="red"><b>Hello I am error message</b></font>]]>
-    </line>
-    <line>
-      <![CDATA[07-Jan-2024 03:14:58 PM : <font face="Calibri, sans-serif" size="2" color="red">&bull; <b>Hello I am inner error message</b></font>]]>
-    </line>
-    <line>
-      <![CDATA[07-Jan-2024 03:14:58 PM : <font face="Calibri, sans-serif">Opening application URL. https://coolstuffqat.fivebelow.com</font>]]>
+      <![CDATA[12-Feb-2024 07:20:04 pm : <font face="Calibri, sans-serif">Close the application</font>]]>
     </line>
   </reporter-output>
-  <suite started-at="2024-01-07T15:14:55 IST" name="Default Suite" finished-at="2024-01-07T15:15:34 IST" duration-ms="39360">
+  <suite started-at="2024-02-12T19:19:30 IST" name="Default Suite" finished-at="2024-02-12T19:20:04 IST" duration-ms="34299">
     <groups>
-      <group name="DESKTOP_REGRESSION">
-        <method signature="LoginPageTestCases.LoginFirstTest()[pri:0, instance:ecommerce.testcases.LoginPageTestCases@497170d4]" name="LoginFirstTest" class="ecommerce.testcases.LoginPageTestCases"/>
-        <method signature="LoginPageTestCases.logExample()[pri:0, instance:ecommerce.testcases.LoginPageTestCases@497170d4]" name="logExample" class="ecommerce.testcases.LoginPageTestCases"/>
-      </group> <!-- DESKTOP_REGRESSION -->
-      <group name="MOBILE_REGRESSION">
-        <method signature="LoginPageTestCases.LoginFirstTest()[pri:0, instance:ecommerce.testcases.LoginPageTestCases@497170d4]" name="LoginFirstTest" class="ecommerce.testcases.LoginPageTestCases"/>
-      </group> <!-- MOBILE_REGRESSION -->
+      <group name="appium_mobile_test">
+        <method signature="AppiumDriverFactoryTestClass.mobileAppTest()[pri:0, instance:ecommerce.testcases.AppiumDriverFactoryTestClass@562bfa64]" name="mobileAppTest" class="ecommerce.testcases.AppiumDriverFactoryTestClass"/>
+      </group> <!-- appium_mobile_test -->
     </groups>
-    <test started-at="2024-01-07T15:14:55 IST" name="Default XmlTest name 23a4db0b-dfae-453d-874a-e21bfb126533" finished-at="2024-01-07T15:15:34 IST" duration-ms="39360">
-      <class name="ecommerce.testcases.LoginPageTestCases">
-        <test-method is-config="true" signature="assignDriver()[pri:0, instance:ecommerce.testcases.LoginPageTestCases@497170d4]" started-at="2024-01-07T15:14:55 IST" name="assignDriver" finished-at="2024-01-07T15:14:58 IST" duration-ms="2839" status="PASS">
+    <test started-at="2024-02-12T19:19:30 IST" name="Test-1" finished-at="2024-02-12T19:20:04 IST" duration-ms="34299">
+      <class name="ecommerce.testcases.AppiumDriverFactoryTestClass">
+        <test-method is-config="true" signature="assignDriver(java.lang.String,java.lang.String)[pri:0, instance:ecommerce.testcases.AppiumDriverFactoryTestClass@562bfa64]" started-at="2024-02-12T19:19:30 IST" name="assignDriver" finished-at="2024-02-12T19:19:43 IST" duration-ms="13221" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[localhost]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[7500]]>
+              </value>
+            </param>
+          </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- assignDriver -->
-        <test-method is-config="true" signature="assignDriver()[pri:0, instance:ecommerce.testcases.LoginPageTestCases@497170d4]" started-at="2024-01-07T15:14:55 IST" name="assignDriver" finished-at="2024-01-07T15:14:58 IST" duration-ms="2826" status="PASS">
+        <test-method signature="mobileAppTest()[pri:0, instance:ecommerce.testcases.AppiumDriverFactoryTestClass@562bfa64]" started-at="2024-02-12T19:19:43 IST" name="mobileAppTest" finished-at="2024-02-12T19:20:04 IST" duration-ms="20900" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- assignDriver -->
-        <test-method signature="logExample()[pri:0, instance:ecommerce.testcases.LoginPageTestCases@497170d4]" started-at="2024-01-07T15:14:58 IST" name="logExample" finished-at="2024-01-07T15:14:58 IST" duration-ms="39" status="PASS">
+        </test-method> <!-- mobileAppTest -->
+        <test-method is-config="true" signature="closeDriver()[pri:0, instance:ecommerce.testcases.AppiumDriverFactoryTestClass@562bfa64]" started-at="2024-02-12T19:20:04 IST" name="closeDriver" finished-at="2024-02-12T19:20:04 IST" duration-ms="5" status="PASS">
           <reporter-output>
             <line>
-              <![CDATA[07-Jan-2024 03:14:58 PM : <font face="Calibri, sans-serif">Hello I am regular log</font>]]>
+              <![CDATA[12-Feb-2024 07:20:04 pm : <font face="Calibri, sans-serif">Close the application</font>]]>
             </line>
-            <line>
-              <![CDATA[07-Jan-2024 03:14:58 PM : &nbsp;&bull;&nbsp;<font face="Calibri, sans-serif">Hello I am step</font>]]>
-            </line>
-            <line>
-              <![CDATA[07-Jan-2024 03:14:58 PM : <font face="Calibri, sans-serif" size="2">&nbsp;&cir;&nbsp;Hello I am substep</font>]]>
-            </line>
-            <line>
-              <![CDATA[07-Jan-2024 03:14:58 PM : <font face="Calibri, sans-serif" color="green"><b>Hello I am verfication step</b></font>]]>
-            </line>
-            <line>
-              <![CDATA[07-Jan-2024 03:14:58 PM : <font face="Calibri, sans-serif" size="2" color="green">&bull; <b>Hello I am inner verification step</b></font>]]>
-            </line>
-            <line>
-              <![CDATA[07-Jan-2024 03:14:58 PM : <font face="Calibri, sans-serif" color="red"><b>Hello I am error message</b></font>]]>
-            </line>
-            <line>
-              <![CDATA[07-Jan-2024 03:14:58 PM : <font face="Calibri, sans-serif" size="2" color="red">&bull; <b>Hello I am inner error message</b></font>]]>
-            </line>
-          </reporter-output>
-        </test-method> <!-- logExample -->
-        <test-method signature="LoginFirstTest()[pri:0, instance:ecommerce.testcases.LoginPageTestCases@497170d4]" started-at="2024-01-07T15:14:58 IST" name="LoginFirstTest" finished-at="2024-01-07T15:15:34 IST" duration-ms="36280" status="PASS">
-          <reporter-output>
-            <line>
-              <![CDATA[07-Jan-2024 03:14:58 PM : <font face="Calibri, sans-serif">Opening application URL. https://coolstuffqat.fivebelow.com</font>]]>
-            </line>
-          </reporter-output>
-        </test-method> <!-- LoginFirstTest -->
-        <test-method is-config="true" signature="closeDriver()[pri:0, instance:ecommerce.testcases.LoginPageTestCases@497170d4]" started-at="2024-01-07T15:14:58 IST" name="closeDriver" finished-at="2024-01-07T15:14:58 IST" duration-ms="159" status="PASS">
-          <reporter-output>
           </reporter-output>
         </test-method> <!-- closeDriver -->
-        <test-method is-config="true" signature="closeDriver()[pri:0, instance:ecommerce.testcases.LoginPageTestCases@497170d4]" started-at="2024-01-07T15:15:34 IST" name="closeDriver" finished-at="2024-01-07T15:15:34 IST" duration-ms="137" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- closeDriver -->
-      </class> <!-- ecommerce.testcases.LoginPageTestCases -->
-    </test> <!-- Default XmlTest name 23a4db0b-dfae-453d-874a-e21bfb126533 -->
+      </class> <!-- ecommerce.testcases.AppiumDriverFactoryTestClass -->
+    </test> <!-- Test-1 -->
   </suite> <!-- Default Suite -->
 </testng-results>

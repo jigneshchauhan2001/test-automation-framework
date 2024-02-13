@@ -36,6 +36,10 @@ public class WebDriverFactory {
 		return driverThreadLocal.get();
 	}
 	
+	public static void setDriver(WebDriver driver) { 
+		driverThreadLocal.set(driver);
+	}
+	
 	public static Action getAction() {
 		return new Action(driverThreadLocal.get(), hashMapLocal.get());
 	}
@@ -44,7 +48,6 @@ public class WebDriverFactory {
 	
 	@BeforeMethod(alwaysRun = true)
 	public void assignDriver() throws MalformedURLException {
-		
 		if (TestProperties.TEST_BROWSER.toString().toLowerCase().contains("chrome")) {
 			ChromeOptions chromeOptions = new ChromeOptions();
 			driverThreadLocal.set(new RemoteWebDriver(new URL("http://"+TestProperties.SELENIUM_HOST+":"+TestProperties.SELENIUM_HUB_PORT+"/wd/hub"),chromeOptions,false));

@@ -24,7 +24,7 @@ public class HomePage extends BasePage{
 
 	public HomePage clickingSignUpCloseButton() {
 		TestNGUtils.reportLog("Clicking sign up close button in home page");
-		getAction().Click(HomePageLocators.SIGN_UP_CLOSE_BUTTON);
+		getAction().click(HomePageLocators.SIGN_UP_CLOSE_BUTTON);
 		return this;
 	}
 	
@@ -34,7 +34,7 @@ public class HomePage extends BasePage{
 		TestNGUtils.reportLog("Entering username +"+userName);
 		for (int i = 0; i < TestProperties.TEST_TIMEOUT.toInteger()/10; i++) {
 			try {
-				getAction().SendKeys(HomePageLocators.USER_NAME, userName);
+				getAction().sendKeys(HomePageLocators.USER_NAME, userName);
 				break;
 			} catch (Exception e) {
 				getAction().waitFor(10);
@@ -45,8 +45,8 @@ public class HomePage extends BasePage{
 
 	public HomePage acceptingBrowserCookeis() {
 		TestNGUtils.reportLog("Accpeting browser cookies");
-		getAction().WaitFor(3);
-		getAction().Click(HomePageLocators.ACCEPT_COOKIES_BUTTON);
+		getAction().waitFor(3);
+		getAction().click(HomePageLocators.ACCEPT_COOKIES_BUTTON);
 		return this;
 	}
 

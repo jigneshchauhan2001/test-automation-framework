@@ -1,1 +1,0 @@
-taskkill /F /FI "WINDOWTITLE eq Selenium_Grid_Hub" && taskkill /F /FI "WINDOWTITLE eq Selenium_Grid_Node" && exit
