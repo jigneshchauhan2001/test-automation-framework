@@ -8,7 +8,7 @@ public class BasePage {
 		return WebDriverFactory.getDriver();
 	}
 	
-	public Action getAction() {
+	public Action getAction(){
 		return WebDriverFactory.getAction();
 	}
 	

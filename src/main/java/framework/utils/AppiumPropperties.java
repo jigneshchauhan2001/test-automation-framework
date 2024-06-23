@@ -17,6 +17,8 @@ public enum AppiumPropperties {
 	MOBILE_DEVICE_TYPE("mobile.device.type", null,Type.String),  // real or virtual
 	MOBILE_REAL_DEVICE("mobile.device.real", "real",Type.String),
 	MOBILE_VIRTUAL_DEVICE("mobile.device.virtual", "virtual",Type.String),
+	MOBILE_UNLOCK_TYPE("mobile.unlock.type", null, Type.String),
+	MOBILE_UNLOCK_KEY("mobile.unlock.key", null, Type.String),
 	
 	// andorid-mobile(virtual or real just change UDID(find from adb devices command) and device name, all other will be common)
 	MOBILE_ANDROID_AUTOMATION_NAME("mobile.android.automation.name",null,Type.String),

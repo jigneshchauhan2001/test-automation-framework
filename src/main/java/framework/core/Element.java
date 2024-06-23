@@ -25,7 +25,6 @@ public class Element {
 	public static final String RUNTIMEID="RUNTIMEID";
 	
 	
-	
 	public Element(final String elementName, final String elementValue,final String elementType) {
 		super();
 		this.elementName=elementName;

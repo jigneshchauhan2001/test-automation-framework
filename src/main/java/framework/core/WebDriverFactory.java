@@ -44,6 +44,10 @@ public class WebDriverFactory {
 		return new Action(driverThreadLocal.get(), hashMapLocal.get());
 	}
 	
+	public static pfm.framework.core.Action getPFMAction() {
+		return new pfm.framework.core.Action(driverThreadLocal.get(), hashMapLocal.get());
+	}
+	
 	
 	
 	@BeforeMethod(alwaysRun = true)

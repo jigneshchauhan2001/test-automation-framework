@@ -27,14 +27,18 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 
-public class Action{
+public class Action {
 
-	private AppiumDriver driver;
+	public AppiumDriver driver;
 	public framework.core.Action getWebAction;
+	public AndroidAction getAndroidAction;
+	public IOSAction getIOSAction;
 	
 	public Action(AppiumDriver driver, HashMap<String, Object> storageMap) {
 		this.driver = driver;
 		getWebAction=new framework.core.Action(driver,storageMap);
+		getAndroidAction=new AndroidAction(driver,storageMap, this);
+		getIOSAction=new IOSAction(driver,storageMap,this);
 	}
 
 	public AppiumDriver getDriver() {
@@ -266,7 +270,11 @@ public class Action{
 	}
 	
 	
-	
+	/**
+	 * Waits for element to be presence, visible clickable and then click
+	 * @param elem
+	 * @return
+	 */
 	public Action click(Element elem) {
 		waitForElementPresence(elem);
 		waitForElementToBeVisible(elem);
@@ -308,7 +316,7 @@ public class Action{
 	 * @param value
 	 * @throws runTimeException
 	 */
-	public Action SendKeys(Element elem,Keys value) {
+	public Action sendKeys(Element elem,Keys value) {
 		waitForElementPresence(elem);
 		waitForElementToBeVisible(elem);
 		try {
@@ -430,30 +438,6 @@ public class Action{
 	}
 
 	
-	/**
-	 * @desc This method return all available context names including WebView and NativeApp etc for android
-	 * @return contextNames
-	 */
-	public Set<String> getAllContextForAndroid() {
-		try {
-			return ((AndroidDriver)driver).getContextHandles();
-		} catch (Exception e) {
-			throw new RuntimeException("Not able to get all contexts");
-		}
-	}
-
-	/**
-	 * @desc this method switches to the given context webview or native for iOS
-	 * @param string
-	 */
-	public Action switchContextForAndroid(String context) {
-		try {
-			((AndroidDriver)driver).context(context);
-		} catch (Exception e) {
-			throw new RuntimeException("Not able to switch to the given context "+context);
-		}
-		return this;
-	}
 	
 	/**
 	 * @desc This method return all available context names including WebView and NativeApp etc for iOS
@@ -576,34 +560,5 @@ public class Action{
 	
 	
 	
-	/**
-	 * @Description : this method will scroll into view of a particular element
-	 * @param element
-	 * @param viewOnTop (if true, the top of element will be aligned to the top of visible area)
-	 */
-	public Action scrollIntoView(Element elem) {
-		
-		try {
-			boolean canScrollMore = true;
-	        while(canScrollMore){
-	            canScrollMore = (Boolean) driver.executeScript("mobile: scrollGesture", ImmutableMap.of(
-	                   // "left", 100, "top", 100, "width", 600, "height", 600,
-	                    "elementId", ((RemoteWebElement) findElement(elem)).getId(),
-	                    "direction", "down",
-	                    "percent", 1.0
-	            ));
-	        }
-	} catch (Exception e) {
-		e.printStackTrace();
-		throw new RuntimeException("Not able to scroll to the element "+elem.getElementName(),e);
-	}
-		return this;
-	}
-
-	
-	
-	
-
-
 	
 }

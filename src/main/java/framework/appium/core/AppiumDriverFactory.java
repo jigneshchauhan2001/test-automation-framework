@@ -66,6 +66,9 @@ public class AppiumDriverFactory {
 //				capabilities.setCapability("appium:avd", AppiumPropperties.MOBILE_ANDROID_DEVICE_NAME.toString());
 //				capabilities.setCapability("appium:avdLaunchTimeout", 300000);
 //			}
+			capabilities.setCapability("unlockType", AppiumPropperties.MOBILE_UNLOCK_TYPE.toString());
+			capabilities.setCapability("unlockKey", AppiumPropperties.MOBILE_UNLOCK_KEY.toString());
+			
 			driverThreadLocal.set(new AndroidDriver(appiumServerURL, capabilities));
 		}else if (TestProperties.APPLICATION_URL.toString().contains(".ipa") || TestProperties.APPLICATION_URL.toString().contains(".app")) {
 			// note that  .ipa apps cannot be installed on simulators. only .app apps u can.
@@ -81,6 +84,8 @@ public class AppiumDriverFactory {
 			if (AppiumPropperties.MOBILE_DEVICE_TYPE.toString().equalsIgnoreCase(AppiumPropperties.MOBILE_VIRTUAL_DEVICE.toString().toString())) {
 				capabilities.setCapability("appium:simulatorStartupTimeout", 300000);
 			}
+			capabilities.setCapability("unlockType", AppiumPropperties.MOBILE_UNLOCK_TYPE.toString());
+			capabilities.setCapability("unlockKey", AppiumPropperties.MOBILE_UNLOCK_KEY.toString());
 			driverThreadLocal.set(new IOSDriver(appiumServerURL, capabilities));
 		}else {
 			throw new RuntimeException("Application Type/Test URL specified in test.priperties is file is not valid");
