@@ -2,269 +2,382 @@ package framework.appium.core;
 
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
+import java.time.Duration;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.RemoteWebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import com.google.common.collect.ImmutableMap;
 
 import framework.core.Element;
 import framework.utils.TestProperties;
 import io.appium.java_client.AppiumBy;
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.ios.IOSDriver;
 
 public class Action {
 
-	private AppiumDriver driver;
-	private HashMap<String, Object> storageMap;
-	
+	public AppiumDriver driver;
+	public framework.core.Action getWebAction;
+	public AndroidAction getAndroidAction;
+	public IOSAction getIOSAction;
 	
 	public Action(AppiumDriver driver, HashMap<String, Object> storageMap) {
 		this.driver = driver;
-		this.storageMap = storageMap;
+		getWebAction=new framework.core.Action(driver,storageMap);
+		getAndroidAction=new AndroidAction(driver,storageMap, this);
+		getIOSAction=new IOSAction(driver,storageMap,this);
 	}
 
 	public AppiumDriver getDriver() {
 		return driver;
 	}
 
-	/**
-	 * @desc this method will store given value against the given key in the hashmap
-	 * @param key
-	 * @param value
-	 * @return
-	 */
-	public synchronized void storeKeyValue(String key,Object value) {
-		storageMap.put(key,value);
-	}
 	
 	/**
-	 * @desc this method will return the value of given key from storage hashmap
-	 * @param key
-	 * @return Object
+	 * @desc gets by and returns it
+	 * @param elem
+	 * @return By
 	 */
-	public synchronized Object retrieveKeyValue(String key) {
-		return storageMap.get(key);
+	public By by(Element elem) {
+		By by=null;
+		if (elem.elementType.equalsIgnoreCase("accessibilityid")) {
+			by=AppiumBy.accessibilityId(elem.getElementValue());
+		}
+		else if (elem.elementType.equalsIgnoreCase("name")) {
+			by=AppiumBy.name(elem.getElementValue());
+		}
+		else if (elem.elementType.equalsIgnoreCase("xpath")) {
+			by=AppiumBy.xpath(elem.getElementValue());
+		}
+		else if (elem.elementType.equalsIgnoreCase("runtimeid")) {
+			by=AppiumBy.id(elem.getElementValue());
+		}
+		else if (elem.elementType.equalsIgnoreCase("class")) {
+			by=AppiumBy.className(elem.getElementValue());
+		}
+		else if (elem.elementType.equalsIgnoreCase("tagname")) {
+			by=AppiumBy.tagName(elem.getElementValue());
+		}
+		else {
+			throw new RuntimeException("Element find by type is not defined");
+		}
+		return by;
 	}
 	
-	/** 
-	 * @desc this method will delete the value of given key from storage hashmap
-	 * @param key
+	/**
+	 * @desc this method finds element and returns it
+	 * @param elem
+	 * @return WebElement
 	 */
-	public synchronized void deleteKeyValue(String key) {
-		storageMap.remove(key);
+	public WebElement findElement(Element elem) {
+		return driver.findElement(by(elem));
 	}
 	
-	
-	public HashMap<String, Object> getHashKey() {
-		return storageMap;
+	/**
+	 * @desc this method find elements and returns it
+	 * @param elem
+	 * @return List<WebElement>
+	 */
+	public List<WebElement> findElements(Element elem) {
+		return driver.findElements(by(elem));
 	}
-	
+	 
 	
 	
 	/**
-	 * @Description This method will wait for the visibility of element located for the time specified in properties file
+	 * @Description This method will wait for the visibility of element located by xpath for the given timeout specified in properties file
 	 * @param element
 	 * @throws runtime exception
 	 */
-	public Action WaitForElementToBeVisible(Element element) {
-		int timeOut = Integer.valueOf(TestProperties.TEST_TIMEOUT.toString());
-		boolean value=false;
-		for (int i = 0; i < timeOut/10; i++) {
-			if (IsElementVisible(element)) {
-				value=true;
-				break;
-			}else {
-				waitFor(5); // sleep for 2 seconds 
-			}
-		}
-		if (value==false) {
-			throw new RuntimeException("Element "+element.getElementName() + " not visible in the page");
+	public Action waitForElementToBeVisible(Element elem) {
+			WebDriverWait wait = new WebDriverWait(AppiumDriverFactory.getDriver(),Duration.ofSeconds((int) TestProperties.TEST_TIMEOUT.getProperty()));
+			try {
+				wait.until(ExpectedConditions.visibilityOf(findElement(elem)));
+		} catch (Exception e) {
+			throw new RuntimeException(elem.getElementName() + " not visible in the page. ", e);
 		}
 		return this;
 	}
 	
 	
-
 	/**
 	 * @Description This method will wait for the visibility of element located for the time given in arguments
 	 * @param element
 	 * @param timeOut
 	 * @throws runtime exception
 	 */   
-	public Action WaitForElementToBeVisible(Element element, int timeOut) {
-		boolean value=false;
-		for (int i = 0; i < timeOut/10; i++) {
-			if (IsElementVisible(element)) {
-				value=true;
-				break;
-			}else {
-				waitFor(5); // sleep for 2 seconds 
-			}
+	public Action waitForElementToBeVisible(Element elem, int timeOut) {
+		WebDriverWait wait = new WebDriverWait(AppiumDriverFactory.getDriver(),Duration.ofSeconds(timeOut));
+	try {
+		wait.until(ExpectedConditions.visibilityOf(findElement(elem)));
+	} catch (Exception e) {
+		throw new RuntimeException(elem.getElementName() + " not visible in the page. ", e);
+	}
+	return this;
+	}
+	
+	/**
+	 * @desc validates weather element is visible or not
+	 * @param elem
+	 * @return
+	 */
+	public boolean isElementVisible(Element elem) {
+		try {
+			waitForElementToBeVisible(elem);
+			return true;
+		} catch (Exception e) {
+			return false;
 		}
-		if (value==false) {
-			throw new RuntimeException("Element "+element.getElementName() + " not visible in the page");
+	}
+	
+	
+	/**
+	 * @desc validates weather element is visible or not
+	 * @param elem, timeOut
+	 * @return
+	 */
+	public boolean isElementVisible(Element elem, int timeOut) {
+		try {
+			waitForElementToBeVisible(elem, timeOut);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+	
+	
+	/**
+	 * @Description This method will wait for the presence of element located by given locator for the given timeout specified in properties file
+	 * @param element
+	 * @throws runtime exception
+	 */
+	public Action waitForElementPresence(Element elem) {
+		WebDriverWait wait = new WebDriverWait(AppiumDriverFactory.getDriver(),Duration.ofSeconds((int) TestProperties.TEST_TIMEOUT.toInteger()));
+		try {
+			wait.until(ExpectedConditions.presenceOfElementLocated(by(elem)));
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException(elem.getElementName() + " not present in the page. ", e);
 		}
 		return this;
 	}
 	
 	
-	public boolean IsElementVisible(Element elem) {
-		boolean value=false;
+	/**
+	 * @Description This method will wait for the presence of element located by given locator for the given timeout specified in method argument
+	 * @param element
+	 * @throws runtime exception
+	 */
+	public Action waitForElementPresence(Element elem, int timeoutInSeconds) {
+		WebDriverWait wait = new WebDriverWait(AppiumDriverFactory.getDriver(),Duration.ofSeconds(timeoutInSeconds));
 		try {
-			if (elem.elementValue.equalsIgnoreCase("accessibilityid")) {
-				value=driver.findElement(AppiumBy.accessibilityId(elem.getElementValue())).isDisplayed();
-			}
-			else if (elem.elementValue.equalsIgnoreCase("name")) {
-				value=driver.findElement(AppiumBy.name(elem.getElementValue())).isDisplayed();
-			}
-			else if (elem.elementValue.equalsIgnoreCase("runtimeid")) {
-				value=driver.findElement(AppiumBy.id(elem.getElementValue())).isDisplayed();
-			}
-			else if (elem.elementValue.equalsIgnoreCase("tagname")) {
-				value=driver.findElement(AppiumBy.tagName(elem.getElementValue())).isDisplayed();
-			}
-			else if (elem.elementValue.equalsIgnoreCase("class")) {
-				value=driver.findElement(AppiumBy.className(elem.getElementValue())).isDisplayed();
-			}
-			else if (elem.elementValue.equalsIgnoreCase("xpath")) {
-				value=driver.findElement(AppiumBy.xpath(elem.getElementValue())).isDisplayed();
-			}else {
-				throw new RuntimeException("Element find by type is not defined");
-			}
-			
+			wait.until(ExpectedConditions.presenceOfElementLocated(by(elem)));
 		} catch (Exception e) {
-			// catch exception do nothing
+			throw new RuntimeException(elem.getElementValue() + " not present in the page. ", e);
 		}
-		return value;
+		return this;
+	}
+	
+	
+	/**
+	 * @Description : this method will wait for the presence element located for the given timeout specified in properties file. Returns true if found else false if not found.
+	 * @param element
+	 * @throws runTimeException
+	 */
+	public boolean isElementPresent(Element element) {
+		try {
+			waitForElementPresence(element);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+	
+	/**
+	 * @Description : this method will wait for the presence element located for the given timeout specified in the method arguments. Returns true if found else false if not found.
+	 * @param element,timeOutInSeconds
+	 * @throws runTimeException
+	 */
+	public boolean isElementPresent(Element element, int timeOutInSeconds) {
+		try {
+			waitForElementPresence(element,timeOutInSeconds);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 	
 	
 	
-	public Action Click(Element elem) {
-		WaitForElementToBeVisible(elem);
+	/**
+	 * @Description : this method will wait for the disappearance of element located by xpath for the given timeout specified in the properties file.
+	 * @param element, timeOutInSeconds
+	 * @throws runTimeException
+	 */
+	public Action waitForElementInvisibility(Element elem) {
+		WebDriverWait wait = new WebDriverWait(AppiumDriverFactory.getDriver(),Duration.ofSeconds((int)TestProperties.TEST_TIMEOUT.getProperty()));
 		try {
-			if (elem.elementValue.equalsIgnoreCase("accessibilityid")) {
-				driver.findElement(AppiumBy.accessibilityId(elem.getElementValue())).click();
-			}
-			else if (elem.elementValue.equalsIgnoreCase("name")) {
-				driver.findElement(AppiumBy.name(elem.getElementValue())).click();
-			}
-			else if (elem.elementValue.equalsIgnoreCase("runtimeid")) {
-				driver.findElement(AppiumBy.id(elem.getElementValue())).click();
-			}
-			else if (elem.elementValue.equalsIgnoreCase("tagname")) {
-				driver.findElement(AppiumBy.tagName(elem.getElementValue())).click();
-			}
-			else if (elem.elementValue.equalsIgnoreCase("class")) {
-				driver.findElement(AppiumBy.className(elem.getElementValue())).click();
-			}
-			else if (elem.elementValue.equalsIgnoreCase("xpath")) {
-				driver.findElement(AppiumBy.xpath(elem.getElementValue())).click();
-			}else {
-				throw new RuntimeException("Element find by type is not defined");
-			}
+			wait.until(ExpectedConditions.invisibilityOf(findElement(elem)));
+		} catch (Exception e) {
+			throw new RuntimeException(elem.getElementValue() + " still visible in the  page ", e);
+		}
+		return this;
+	}
+	
+	/**
+	 * @Description : this method will wait for the disappearance of element located by xpath for the given timeout specified in the method argument.
+	 * @param element, timeOutInSeconds
+	 * @throws runTimeException
+	 */
+	public Action waitForElementInvisibility(Element elem, int timeOut) {
+		WebDriverWait wait = new WebDriverWait(AppiumDriverFactory.getDriver(),Duration.ofSeconds(timeOut));
+		try {
+			wait.until(ExpectedConditions.invisibilityOf(findElement(elem)));
+		} catch (Exception e) {
+			throw new RuntimeException(elem.getElementValue() + " still visible in the  page ", e);
+		}
+		return this;
+	}
+	
+	
+	
+	/**
+	 * @Description This method will wait for the element to be clickable for the given timeout specified in properties file
+	 * @param element
+	 * @throws runtime exception
+	 */
+	public Action waitForElementToBeClickable(Element elem) {
+		try {
+			WebDriverWait wait = new WebDriverWait(AppiumDriverFactory.getDriver(),Duration.ofSeconds((int) TestProperties.TEST_TIMEOUT.getProperty()));
+			wait.until(ExpectedConditions.elementToBeClickable(findElement(elem)));
+		} catch (Exception e) {
+			throw new RuntimeException(elem.getElementValue() + " not clickable in the page. ", e);
+		}
+		return this;
+	}
+	
+	
+	/**
+	 * Waits for element to be presence, visible clickable and then click
+	 * @param elem
+	 * @return
+	 */
+	public Action click(Element elem) {
+		waitForElementPresence(elem);
+		waitForElementToBeVisible(elem);
+		waitForElementToBeClickable(elem);
+		try {
+			findElement(elem).click();
 		} catch (Exception e) {
 			throw new RuntimeException("Not able to click on element "+elem.getElementName(),e);
 		}
 		return this;
 	}
 	
-	public Action SendKeys(Element elem,String value) {
-		WaitForElementToBeVisible(elem);
+	
+	
+	/**
+	 * @Description : this this method will wait for presence,visible and clickable of element and will first clear and then it will send keys 
+	 * @param element
+	 * @param value
+	 * @throws runTimeException
+	 */
+	public Action sendKeys(Element elem,String value) {
+		waitForElementPresence(elem);
+		waitForElementToBeVisible(elem);
+		waitForElementToBeClickable(elem);
 		try {
-			if (elem.elementValue.equalsIgnoreCase("accessibilityid")) {
-				driver.findElement(AppiumBy.accessibilityId(elem.getElementValue())).click();
-				driver.findElement(AppiumBy.accessibilityId(elem.getElementValue())).clear();
-				driver.findElement(AppiumBy.accessibilityId(elem.getElementValue())).sendKeys(value);
-			}
-			else if (elem.elementValue.equalsIgnoreCase("name")) {
-				driver.findElement(AppiumBy.name(elem.getElementValue())).click();
-				driver.findElement(AppiumBy.name(elem.getElementValue())).clear();
-				driver.findElement(AppiumBy.name(elem.getElementValue())).sendKeys(value);
-			}
-			else if (elem.elementValue.equalsIgnoreCase("runtimeid")) {
-				driver.findElement(AppiumBy.id(elem.getElementValue())).click();
-				driver.findElement(AppiumBy.id(elem.getElementValue())).clear();
-				driver.findElement(AppiumBy.id(elem.getElementValue())).sendKeys(value);
-			}
-			else if (elem.elementValue.equalsIgnoreCase("tagname")) {
-				driver.findElement(AppiumBy.tagName(elem.getElementValue())).click();
-				driver.findElement(AppiumBy.tagName(elem.getElementValue())).clear();
-				driver.findElement(AppiumBy.tagName(elem.getElementValue())).sendKeys(value);
-			}
-			else if (elem.elementValue.equalsIgnoreCase("class")) {
-				driver.findElement(AppiumBy.className(elem.getElementValue())).click();
-				driver.findElement(AppiumBy.className(elem.getElementValue())).clear();
-				driver.findElement(AppiumBy.className(elem.getElementValue())).sendKeys(value);
-			}
-			else if (elem.elementValue.equalsIgnoreCase("xpath")) {
-				driver.findElement(AppiumBy.xpath(elem.getElementValue())).click();
-				driver.findElement(AppiumBy.xpath(elem.getElementValue())).clear();
-				driver.findElement(AppiumBy.xpath(elem.getElementValue())).sendKeys(value);
-			}else {
-				throw new RuntimeException("Element find by type is not defined");
-			}
+			findElement(elem).click();
+			findElement(elem).clear();
+			findElement(elem).sendKeys(value);
 		} catch (Exception e) {
-			throw new RuntimeException("Not able to type value "+value + " in the textbox "+elem.getElementName());
+			throw new RuntimeException("Not able to type value "+value + " in the textbox "+elem.getElementName(),e);
 		}
 		return this;
 	}
 	
 	
+	/**
+	 * @Description : this this method will wait for presence,visible of element and then it will send keys 
+	 * @param element
+	 * @param value
+	 * @throws runTimeException
+	 */
+	public Action sendKeys(Element elem,Keys value) {
+		waitForElementPresence(elem);
+		waitForElementToBeVisible(elem);
+		try {
+			findElement(elem).sendKeys(value);
+		} catch (Exception e) {
+			throw new RuntimeException("Not able to type value "+value + " in the textbox "+elem.getElementName(),e);
+		}
+		return this;
+	}
+		
+
+	
+	
+	/**
+	 * @Description : this method will wait for the presence of element of element and return the value of attribute specified..
+	 * @param element
+	 * @throws runTimeException
+	 * @returns String{value}
+	 */
 	public String getAttribute(Element elem, String attribute) {
 		String attrValue="";
-		WaitForElementToBeVisible(elem);
+		waitForElementPresence(elem);
 		try {
-			if (elem.elementValue.equalsIgnoreCase("accessibilityid")) {
-				 attrValue=driver.findElement(AppiumBy.accessibilityId(elem.getElementValue())).getAttribute(attribute);
-			}
-			else if (elem.elementValue.equalsIgnoreCase("name")) {
-				attrValue=driver.findElement(AppiumBy.name(elem.getElementValue())).getAttribute(attribute);
-			}
-			else if (elem.elementValue.equalsIgnoreCase("runtimeid")) {
-				attrValue=driver.findElement(AppiumBy.id(elem.getElementValue())).getAttribute(attribute);
-			}
-			else if (elem.elementValue.equalsIgnoreCase("tagname")) {
-				attrValue=driver.findElement(AppiumBy.tagName(elem.getElementValue())).getAttribute(attribute);
-			}
-			else if (elem.elementValue.equalsIgnoreCase("class")) {
-				attrValue=driver.findElement(AppiumBy.className(elem.getElementValue())).getAttribute(attribute);
-			}
-			else if (elem.elementValue.equalsIgnoreCase("xpath")) {
-				attrValue=driver.findElement(AppiumBy.xpath(elem.getElementValue())).getAttribute(attribute);
-			}else {
-				throw new RuntimeException("Element find by type is not defined");
-			}
+			attrValue=findElement(elem).getAttribute(attribute);
 		} catch (Exception e) {
 			throw new RuntimeException("Not able to get the attribute "+attribute+" from element "+elem.getElementName(),e);
 		}
 		return attrValue;
 	}
 	
+
+	
+	/**
+	 * @Description : this method will wait for the presence of element and return the text value
+	 * @param element
+	 * @throws runTimeException
+	 * @returns String{value}
+	 */
+	public String getText(Element elem) {
+		String textValue="";
+		waitForElementPresence(elem);
+		try {
+			textValue=findElement(elem).getText();
+		} catch (Exception e) {
+			throw new RuntimeException("Not able to get the text from "+elem.getElementName(),e);
+		}
+		return textValue;
+	}
 	
 	
 	
+	/**
+	 * @desc get element count
+	 * @param elem
+	 * @return
+	 */
 	public int getElementCount(Element elem) {
 		int elementCount=0;
-		WaitForElementToBeVisible(elem);
+		waitForElementPresence(elem);
 		try {
-			if (elem.elementValue.equalsIgnoreCase("accessibilityid")) {
-				elementCount=driver.findElements(AppiumBy.accessibilityId(elem.getElementValue())).size();
-			}
-			else if (elem.elementValue.equalsIgnoreCase("name")) {
-				elementCount=driver.findElements(AppiumBy.name(elem.getElementValue())).size();
-			}
-			else if (elem.elementValue.equalsIgnoreCase("runtimeid")) {
-				elementCount=driver.findElements(AppiumBy.id(elem.getElementValue())).size();
-			}
-			else if (elem.elementValue.equalsIgnoreCase("tagname")) {
-				elementCount=driver.findElements(AppiumBy.tagName(elem.getElementValue())).size();
-			}
-			else if (elem.elementValue.equalsIgnoreCase("class")) {
-				elementCount=driver.findElements(AppiumBy.className(elem.getElementValue())).size();
-			}
-			else if (elem.elementValue.equalsIgnoreCase("xpath")) {
-				elementCount=driver.findElements(AppiumBy.xpath(elem.getElementValue())).size();
-			}else {
-				throw new RuntimeException("Element find by type is not defined");
-			}
+			elementCount=findElements(elem).size();
 		} catch (Exception e) {
 			throw new RuntimeException("Not able to find element "+elem.getElementName(),e);
 		}
@@ -272,37 +385,85 @@ public class Action {
 	}
 	
 	
-	public Action WaitForElementInvisibility(Element elem) {
-		int timeOut=Integer.valueOf(TestProperties.TEST_TIMEOUT.toString());
-		boolean notVisible=false;
-		for (int i = 0; i < timeOut/10; i++) {
-			if (IsElementVisible(elem)==false) {
-				notVisible=true;
-				break;
-			}
-			else {
-				waitFor(5);
-			}
+	/**
+	 * @Descriotion : This method will wait for presence of element and then return the default selected value / first value of a dropdown.
+	 * @param element
+	 * @return String{value}
+	 */
+	public String getDefaultDropDownSelectedValue(Element elem) {
+		String value ="";
+		waitForElementPresence(elem);
+		Select select = null;
+			try {
+				select = new Select(findElement(elem));
+				value=select.getFirstSelectedOption().getText();
+			} catch (Exception e) {
+			throw new RuntimeException("Not able to get default /first selected value from drop down "+elem.getElementName(),e);
 		}
-		if (notVisible==false) throw new RuntimeException(elem.getElementName() + " element still visible in the page");
+		return value;	
+	}
+	
+	/**
+	 * @Descriotion : This method will wait for presence of element and then select the option by given visible text
+	 * @param element
+	 */
+	public Action Select(Element elem,String visibleText) {
+		waitForElementPresence(elem);
+		Select select = null;
+			try {
+				select = new Select(findElement(elem));
+				select.selectByVisibleText(visibleText);
+			} catch (Exception e) {
+			throw new RuntimeException("Not able to select the option "+visibleText+" in "+elem.getElementName(),e);
+		}
 		return this;
 	}
 	
-	public Action WaitForElementInvisibility(Element elem, int timeOut) {
-		boolean notVisible=false;
-		for (int i = 0; i < timeOut/10; i++) {
-			if (IsElementVisible(elem)==false) {
-				notVisible=true;
-				break;
-			}
-			else {
-				waitFor(5);
-			}
+	
+	/**
+	 * @Descriotion : This method will wait for presence of element and then select the given value of the dropdown by index.
+	 * @param element
+	 * @param index
+	 */
+	public Action select(Element elem,int index) {
+		waitForElementPresence(elem);
+		Select select = null;
+			try {
+				select = new Select(findElement(elem));
+				select.selectByIndex(index);
+		} catch (Exception e) {
+			throw new RuntimeException("Not able to select the option which is on index "+index+" from drop down "+elem.getElementName(),e);
 		}
-		if (notVisible==false) throw new RuntimeException(elem.getElementName() + " element still visible in the page");
 		return this;
 	}
+
 	
+	
+	/**
+	 * @desc This method return all available context names including WebView and NativeApp etc for iOS
+	 * @return contextNames
+	 */
+	public Set<String> getAllContextForIOS() {
+		try {
+			return ((IOSDriver)driver).getContextHandles();
+		} catch (Exception e) {
+			throw new RuntimeException("Not able to get all contexts");
+		}
+	}
+
+	/**
+	 * @desc this method switches to the given context webview or native for android
+	 * @param string
+	 */
+	public Action switchContextForIOS(String context) {
+		try {
+			((IOSDriver)driver).context(context);
+		} catch (Exception e) {
+			throw new RuntimeException("Not able to switch to the given context "+context);
+		}
+		return this;
+	}
+
 	
 	/**
 	 * @desc This method will perform key-press using robot for eg.,  control key, functions key, numeric keys and alphabetic keys
@@ -310,7 +471,7 @@ public class Action {
 	 * @param value to be entered
 	 * @return Action
 	 */
-	public Action PerformKeyBoardKeys(String value) {
+	public Action performKeyBoardKeys(String value) {
 		try {
 			Robot robot = new Robot();
 			switch (value) {
@@ -399,19 +560,5 @@ public class Action {
 	
 	
 	
-	
-	/**
-	 * @desc this method will wait for specific time
-	 * @param seconds
-	 */
-	public void waitFor(int seconds) {
-		try {
-			Thread.sleep(seconds*1000);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-
 	
 }

@@ -11,6 +11,7 @@ import com.jcraft.jsch.ChannelSftp.LsEntry;
 
 import ecommerce.entities.Start;
 import ecommerce.testData.yaml.LoginPageTestData;
+import framework.core.Element;
 import framework.core.WebDriverFactory;
 import framework.testNG.RetryAnalyzer;
 import framework.testNG.TestGroups;
@@ -23,7 +24,6 @@ public class LoginPageTestCases extends WebDriverFactory {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class,groups = {TestGroups.DESKTOP_REGRESSION,TestGroups.MOBILE_REGRESSION})
 	public void LoginFirstTest(){
-		
 		String testcaseName=new Exception().getStackTrace()[0].getMethodName();
 		LoginPageTestData testData=LoginPageTestData.fetch(testcaseName);
 		Start.
@@ -38,11 +38,23 @@ public class LoginPageTestCases extends WebDriverFactory {
 		// you can also modify some string coming from yaml 
 		String name=testData.itemDetails.modifyString.replace("Jignesh", "Sunil");
 		System.out.println(name);
+		
 	}
 	
 	
 	@Test(retryAnalyzer = RetryAnalyzer.class,groups = {TestGroups.DESKTOP_REGRESSION})
 	public void logExample(){
+		// multiple formats example--till 9 u can use it.
+		Element element = new Element("Element", "//div[text()={0}]//div[{1}]", Element.XPATH);
+		String f1="f1";
+		String f2="f2";
+		System.out.println(element.format(f1,f2).getElementValue());;  /// op: //div[text()={f1}]//div[{f2}]
+		//single format example
+		Element ele = new Element("Element", "//div[text()={0}]", Element.XPATH);
+		String f3="f3";
+		System.out.println(ele.format(f3).getElementValue());;  /// op: //div[text()={f3}]
+					
+		
 		TestNGUtils.reportLog("Hello I am regular log");
 		TestNGUtils.reportLog("Hello I am step", LogType.STEP);
 		TestNGUtils.reportLog("Hello I am substep", LogType.SUBSTEP);
@@ -52,8 +64,6 @@ public class LoginPageTestCases extends WebDriverFactory {
 		TestNGUtils.reportLog("Hello I am inner error message", LogType.INNER_ERROR_MESSAGE);
 		
 	}
-	
-	
 	
 	
 	

@@ -1,5 +1,6 @@
 package framework.core;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
@@ -14,7 +15,11 @@ import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.BeforeTest;
 
 import framework.utils.TestProperties;
 
@@ -31,14 +36,22 @@ public class WebDriverFactory {
 		return driverThreadLocal.get();
 	}
 	
+	public static void setDriver(WebDriver driver) { 
+		driverThreadLocal.set(driver);
+	}
+	
 	public static Action getAction() {
 		return new Action(driverThreadLocal.get(), hashMapLocal.get());
 	}
 	
+	public static pfm.framework.core.Action getPFMAction() {
+		return new pfm.framework.core.Action(driverThreadLocal.get(), hashMapLocal.get());
+	}
+	
+	
 	
 	@BeforeMethod(alwaysRun = true)
 	public void assignDriver() throws MalformedURLException {
-		
 		if (TestProperties.TEST_BROWSER.toString().toLowerCase().contains("chrome")) {
 			ChromeOptions chromeOptions = new ChromeOptions();
 			driverThreadLocal.set(new RemoteWebDriver(new URL("http://"+TestProperties.SELENIUM_HOST+":"+TestProperties.SELENIUM_HUB_PORT+"/wd/hub"),chromeOptions,false));
